@@ -6,15 +6,16 @@ import json, re
 
 dc_key='ur dc key'
 api_key='ur gemini api'
+ur_guild_id = 0000 #ur guild id in int format
 
 class MyClient(commands.Bot):
     async def on_ready(self):
         print(f'Logged on as {self.user}!')
 
         try:
-            guild = discord.Object(id=1343825266618667033)
-            synced = await self.tree.sync(guild=guild)
-            print(f'Synced {len(synced)} commands to guild {guild.id}')
+            guild = discord.Object(id=ur_guild_id)
+            synced = await self.tree.sync(guild=guild) 
+            print(f'Synced {len(synced)} commands to guild {guild.id}') #use your specific guild id
             
         except Exception as e:
             print(f'Error syncing commands: {e}')  
@@ -33,9 +34,9 @@ intents = discord.Intents.all()
 intents.message_content = True
 client = MyClient(command_prefix="!", intents=intents)
 genai.configure(api_key)
-model=genai.GenerativeModel("gemini-2.5-flash")
+model=genai.GenerativeModel("gemini-2.5-flash") #use whichever model like(gemini-2.5-pro, gemini-2.5-flash-lite)
 
-GUILD_ID = discord.Object(id=1343825266618667033)
+GUILD_ID = discord.Object(id=ur_guild_id)
 
 @client.tree.command(name="help", description="Guide for using the bot", guild=GUILD_ID)
 async def hello(interaction: discord.Interaction):
